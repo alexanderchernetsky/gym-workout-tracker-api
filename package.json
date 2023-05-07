@@ -1,7 +1,7 @@
 {
-  "name": "nodejs-express-template",
+  "name": "gym-workout-tracker-api",
   "version": "1.0.0",
-  "description": "Scalable and basic template for making Node.js apps by using express",
+  "description": "Node.js-Express API for the Gym Workout Tracker app",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
@@ -32,7 +32,8 @@
     "express": "^4.17.1",
     "express-ip": "^1.0.4",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.15"
+    "mongoose": "^5.9.15",
+    "nodemon": "^2.0.15"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
