@@ -5,7 +5,7 @@ const login = require('../src/login/routes');
 // const getData = require('../middlewares/getData');
 
 module.exports = app => {
-    app.use('/status', status);
+    app.use('/', status);
     app.use('/login', login);
     // app.use('/users', users);
     // app.use('/users', validateAuth.checkIfAuthenticated, getData.getGeoip, users);
