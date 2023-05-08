@@ -2,6 +2,7 @@ const inputs = (schema, property) => {
     return (req, res, next) => {
         const {error} = schema.validate(req[property]);
         const valid = error == null;
+
         if (valid) {
             next();
         } else {
