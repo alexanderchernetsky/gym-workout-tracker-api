@@ -1,6 +1,7 @@
 const status = require('../src/health/routes');
 const login = require('../src/login/routes');
 const register = require('../src/register/routes');
+const progressEntries = require('../src/progress-entries/routes');
 // const users = require('../src/users/routes');
 // const validateAuth = require('../middlewares/validateAuth');
 // const getData = require('../middlewares/getData');
@@ -9,6 +10,7 @@ module.exports = app => {
     app.use('/', status);
     app.use('/login', login);
     app.use('/register', register);
+    app.use('/progress-entries', progressEntries);
     // app.use('/users', users);
     // app.use('/users', validateAuth.checkIfAuthenticated, getData.getGeoip, users);
     app.use('*', (req, res) => {
