@@ -4,7 +4,11 @@ const expressip = require('express-ip');
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use(
+    bodyParser.json({
+        limit: '50mb'
+    })
+); // have to increase the limit, otherwise requests with photos will fail
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(expressip().getIpInfoMiddleware);
