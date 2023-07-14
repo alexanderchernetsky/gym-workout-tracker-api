@@ -9,8 +9,8 @@ const progressEntry = require('../src/progress-entry/routes');
 
 module.exports = app => {
     app.use('/', status);
-    app.use('/login', login);
     app.use('/register', register);
+    app.use('/login', login);
     app.use('/progress-entries', progressEntries);
     app.use('/progress-entry', progressEntry);
     // app.use('/users', users);
