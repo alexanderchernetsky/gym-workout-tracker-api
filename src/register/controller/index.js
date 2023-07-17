@@ -1,17 +1,22 @@
-const Bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 const models = require('../models/index');
+
+const BAD_REQUEST_STATUS = 400;
 
 // eslint-disable-next-line consistent-return
 module.exports.register = async (res, parameters) => {
     console.log('register route received a request with parameters', parameters);
 
-    // todo: check that user is unique OR will it be rejected by the DB ?
+    const salt = bcrypt.genSaltSync(10); // A salt is a random string that makes the hash unpredictable.
+    // By hashing a plain text password plus a salt, the hash algorithm’s output is no longer predictable.
+    // The same password will no longer yield the same hash. The salt gets automatically included with the hash, so you do not need to store it in a database.
     const newUser = models.User({
-        password: Bcrypt.hashSync(parameters.password, 10), // todo: check what's going on here
+        password: bcrypt.hashSync(parameters.password, salt), // synchronously generates a hash for the given password
         username: parameters.username,
         email: parameters.email
     });
 
+    // todo: check that user is unique
     try {
         await newUser.save();
 
@@ -20,8 +25,8 @@ module.exports.register = async (res, parameters) => {
         });
     } catch (error) {
         // todo: check that error is shown on the frontend
-        return res.status(400).json({
-            status: 400,
+        return res.status(BAD_REQUEST_STATUS).json({
+            status: BAD_REQUEST_STATUS,
             message: `Registration failed: ${error}`
         });
     }
