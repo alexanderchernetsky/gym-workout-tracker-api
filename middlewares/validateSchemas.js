@@ -1,14 +1,15 @@
-const inputs = (schema, property) => {
-    return (req, res, next) => {
-        const {error} = schema.validate(req[property]);
-        const valid = error == null;
+const SERVER_CANNOT_PROCESS_REQUEST_STATUS = 422;
 
-        if (valid) {
+// middleware to use with the yup library
+const inputs = (schema, property) => {
+    return async (req, res, next) => {
+        try {
+            await schema.validate(req[property]);
+            console.log('request validated');
             next();
-        } else {
-            const {details} = error;
-            const message = details.map(i => i.message).join(',');
-            res.status(422).json({error: message, status: 422});
+        } catch (error) {
+            console.log('validation error');
+            res.status(SERVER_CANNOT_PROCESS_REQUEST_STATUS).json({error, status: SERVER_CANNOT_PROCESS_REQUEST_STATUS});
         }
     };
 };

@@ -16,7 +16,6 @@ module.exports.register = async (res, parameters) => {
         email: parameters.email
     });
 
-    // todo: check that user is unique
     try {
         await newUser.save();
 
@@ -24,10 +23,11 @@ module.exports.register = async (res, parameters) => {
             success: true
         });
     } catch (error) {
-        // todo: check that error is shown on the frontend
+        console.log(error);
+
         return res.status(BAD_REQUEST_STATUS).json({
             status: BAD_REQUEST_STATUS,
-            message: `Registration failed: ${error}`
+            message: `user with such email or username already exists`
         });
     }
 };
