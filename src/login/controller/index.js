@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt');
-// const jwt = require('jsonwebtoken');
-//
-// const config = require('../../../config');
+const jwt = require('jsonwebtoken');
+const config = require('../../../config');
 const {User} = require('../../register/models/index');
 const {SUCCESS_STATUS, UNAUTHORIZED_STATUS, NOT_FOUND_STATUS, INTERNAL_SERVER_ERROR} = require('../../../constants/http');
 
@@ -24,7 +23,17 @@ module.exports.login = async (res, parameters) => {
                 }
 
                 if (isPasswordMatch) {
-                    // todo: create JWT and return it in a response
+                    const token = jwt.sign(
+                        {
+                            email: user.email,
+                            password: user.password
+                        },
+                        config.JWT_SECRET,
+                        {
+                            expiresIn: 60 * 60 * 12 // seconds*minutes*hours, 12 hours in this case
+                        }
+                    ); // JWT is way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed.
+
                     console.log('user logged in successfully');
 
                     return res.status(SUCCESS_STATUS).json({
@@ -34,7 +43,8 @@ module.exports.login = async (res, parameters) => {
                             id: user._id,
                             username: user.username,
                             email: user.email
-                        }
+                        },
+                        token
                     });
                 } else {
                     return res.status(UNAUTHORIZED_STATUS).json({
