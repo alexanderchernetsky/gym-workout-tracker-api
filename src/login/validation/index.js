@@ -1,10 +1,14 @@
-const Joi = require('@hapi/joi');
+const yup = require('yup');
+const {FIELD_MIN_LENGTH, FIELD_MAX_LENGTH, passwordLengthValidationMsg} = require('../../../middlewares/yup');
 
-// todo: use yup for validation
 const schemas = {
-    login: Joi.object().keys({
-        email: Joi.string().email().required(),
-        password: Joi.string().required()
+    login: yup.object().shape({
+        email: yup.string().email('email is not valid').required('email is required'),
+        password: yup
+            .string()
+            .required('password is required')
+            .min(FIELD_MIN_LENGTH, passwordLengthValidationMsg)
+            .max(FIELD_MAX_LENGTH, passwordLengthValidationMsg)
     })
 };
 

@@ -1,13 +1,14 @@
 const bcrypt = require('bcrypt');
 const models = require('../models/index');
+const {BAD_REQUEST_STATUS, NEW_RESOURCE_CREATED_STATUS} = require('../../../constants/http');
 
-const BAD_REQUEST_STATUS = 400;
+const SAULT_ROUNDS = 10; // The higher the saltRounds value, the more time the hashing algorithm takes. You want to select a number that is high enough to prevent attacks, but not slower than potential user patience.
 
 // eslint-disable-next-line consistent-return
 module.exports.register = async (res, parameters) => {
     console.log('register route received a request with parameters', parameters);
 
-    const salt = bcrypt.genSaltSync(10); // A salt is a random string that makes the hash unpredictable.
+    const salt = bcrypt.genSaltSync(SAULT_ROUNDS); // A salt is a random string that makes the hash unpredictable.
     // By hashing a plain text password plus a salt, the hash algorithm’s output is no longer predictable.
     // The same password will no longer yield the same hash. The salt gets automatically included with the hash, so you do not need to store it in a database.
     const newUser = models.User({
@@ -19,7 +20,7 @@ module.exports.register = async (res, parameters) => {
     try {
         await newUser.save();
 
-        res.status(201).json({
+        res.status(NEW_RESOURCE_CREATED_STATUS).json({
             success: true
         });
     } catch (error) {
