@@ -36,11 +36,12 @@ module.exports.login = async (res, parameters) => {
                             email: user.email
                         }
                     });
+                } else {
+                    return res.status(UNAUTHORIZED_STATUS).json({
+                        success: true,
+                        message: `incorrect password`
+                    });
                 }
-                return res.status(UNAUTHORIZED_STATUS).json({
-                    success: true,
-                    message: `incorrect password`
-                });
             });
         } else {
             // user not found
