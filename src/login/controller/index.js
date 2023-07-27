@@ -5,8 +5,6 @@ const bcrypt = require('bcrypt');
 const {User} = require('../../register/models/index');
 const {SUCCESS_STATUS, UNAUTHORIZED_STATUS, NOT_FOUND_STATUS, INTERNAL_SERVER_ERROR} = require('../../../constants/http');
 
-// todo: disable this eslint rule
-// eslint-disable-next-line consistent-return
 module.exports.login = async (res, parameters) => {
     console.log('login route received a request with parameters', parameters);
 

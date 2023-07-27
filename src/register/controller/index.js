@@ -4,7 +4,6 @@ const {BAD_REQUEST_STATUS, NEW_RESOURCE_CREATED_STATUS} = require('../../../cons
 
 const SAULT_ROUNDS = 10; // The higher the saltRounds value, the more time the hashing algorithm takes. You want to select a number that is high enough to prevent attacks, but not slower than potential user patience.
 
-// eslint-disable-next-line consistent-return
 module.exports.register = async (res, parameters) => {
     console.log('register route received a request with parameters', parameters);
 
