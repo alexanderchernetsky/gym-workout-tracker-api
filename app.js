@@ -23,6 +23,8 @@ app.use((req, res, next) => {
     // Request headers you wish to allow
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Origin, Content-Type, X-Auth-Token');
 
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+
     // Pass to next layer of middleware
     next();
 });
