@@ -14,7 +14,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(expressip().getIpInfoMiddleware);
 
 app.use((req, res, next) => {
-    console.log('received a request', req);
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', '*');
 
@@ -23,8 +22,6 @@ app.use((req, res, next) => {
 
     // Request headers you wish to allow
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-    console.log('passing the response', res);
 
     // Pass to next layer of middleware
     next();
